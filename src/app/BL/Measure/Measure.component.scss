@@ -43,7 +43,25 @@
 }
 .controler{
     display: flex;
-    justify-content: space-evenly
+    
+}
+.plusicon{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #C8CBCF;
+}
+.plusicon i:hover{
+    color: darkcyan;
+    cursor: pointer;
+}
+.therdtit{
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-evenly;
 }
 
 

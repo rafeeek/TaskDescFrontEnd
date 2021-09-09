@@ -123,11 +123,7 @@ export class MeasureComponent implements OnInit {
   }
 
 
-  showSuccess(data:string) {
-    this.toastr.success('', data ,{timeOut: 2000, progressBar:true , });
-  };
-
-  clocseslider(){
+  clocse(){
     $(".slider").addClass("hide")
     $(".tablecol").removeClass("col-md-7")
     $(".tablecol").addClass("col-md-10")
@@ -150,6 +146,12 @@ export class MeasureComponent implements OnInit {
       this.UpdateOneMeasure(event)
   }
 
+
+  //#region Show Tasor
+  showSuccess(data:string) {
+    this.toastr.success('', data ,{timeOut: 2000, progressBar:true , });
+  };
+  //#endregion  
 
   
   ngOnInit() {
