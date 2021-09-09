@@ -123,7 +123,7 @@ export class MeasureComponent implements OnInit {
   }
 
 
-  clocse(){
+  clocseslider(){
     $(".slider").addClass("hide")
     $(".tablecol").removeClass("col-md-7")
     $(".tablecol").addClass("col-md-10")
