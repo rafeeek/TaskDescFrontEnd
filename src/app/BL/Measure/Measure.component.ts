@@ -18,6 +18,7 @@ export class MeasureComponent implements OnInit {
   targetmodel? : string;
   categoryName? : string;
   AddnewMeasuresArray : object[] = [];
+  isSingleClick: Boolean = true;     
 
   uomeCateg : any ; uomeId : any ; uomeDesc : any ; uomeSysFlg : any ; umcsId : any ; uomkey : any ;
 
@@ -126,14 +127,32 @@ export class MeasureComponent implements OnInit {
     this.toastr.success('', data ,{timeOut: 2000, progressBar:true , });
   };
 
+  clocseslider(){
+    $(".slider").addClass("hide")
+    $(".tablecol").removeClass("col-md-7")
+    $(".tablecol").addClass("col-md-10")
+  }
 
+  CallForClick(obj:object){
+    this.isSingleClick = true;
+      setTimeout(()=>{
+        if(this.isSingleClick){
+          $(".tablecol").removeClass("col-md-10")
+          $(".tablecol").addClass("col-md-7")
+          $(".slider").removeClass("hide")
+          $(".titletext").html(`${this.caption}`)
 
+        }
+      },250)
+ }
+  CallForDblClick(event:any){
+      this.isSingleClick = false;
+      this.UpdateOneMeasure(event)
+  }
 
 
   
   ngOnInit() {
-
-
 
   }
 

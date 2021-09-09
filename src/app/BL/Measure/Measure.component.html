@@ -1,22 +1,20 @@
 <div class="row">
 
-    <div class="col-md-2  bg-light rounded">
+    <div class="col-md-2 firstcol  bg-light rounded">
       <div class="contain ">
         <div class="header mb-4">
               <i data-id="addcategory" (click)="openModel($event)" title="add new category" class="fas fa-plus"></i>
               <i class="fas fa-copy ml-3"></i>
               <input class="form-control ml-3" type="text" placeholder="Search">
         </div> 
-        <div class="apendCategory mb-3">
-          
-        </div>
+        <div class="apendCategory mb-3"></div>
         <div class="list-group mb-3" id="list-tab" role="tablist">
           <a *ngFor="let one of DistinctList" (click)="getMeasures($event)" data-id="{{one}}" class="list-group-item  list-group-item-secondary list-group-item-action " id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">{{one}}</a>
         </div>
       </div>
     </div>
 
-    <div class="col-md-10 ">
+    <div class="col-md-10 tablecol">
       <div class="contain bg-light py-3 rounded">
 
         <!-- Start table -->
@@ -41,9 +39,9 @@
                                   <p class="mb-0 mr-3 ml-1">Delete</p>
                                 </div>
                                 <div  class="containico">
-                                  <button  [disabled]="AddnewMeasuresArray.length == 0" style="display: flex;" id="btnupdate" (click)="sendMeasuresToDatabase()" class="btn">
+                                  <button  [disabled]="AddnewMeasuresArray.length == 0" style="display: flex;" id="btnSave" (click)="sendMeasuresToDatabase()" class="btn">
                                     <i class="fas fa-edit"></i>
-                                    <p class="mb-0 ml-1">Update</p>
+                                    <p class="mb-0 ml-1">Save</p>
                                   </button>
                                 </div>
                                 <div  class="containico">
@@ -63,7 +61,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let one of MeasuresArray" (dblclick)="UpdateOneMeasure(one)">
+                                    <tr *ngFor="let one of MeasuresArray" (click)="CallForClick(one)" (dblclick)="CallForDblClick(one)">
                                       <td>{{one.UomeId}}</td>
                                       <td>{{one.UomeDesc}}</td>
                                       <td>{{one.UmcsId}}</td>
@@ -80,11 +78,26 @@
       </div>
     </div>
 
-    <!-- <div class="col-md-3">
-      <div class="contain">
-
+    <div class="col-md-3  slider bg-light rounded">
+      <div class="contain py-3">
+        <div (click)="clocseslider()" class="w-100 text-right mb-3"><i class="fas fa-times-circle closeicon"></i></div>
+        <h5 style="background-color: #C8CBCF;" class=" py-2 mb-4 rounded text-center titletext">Rafeek</h5>
+        <div class="controler px-3 row">
+          <h4 class="mr-3">c</h4>
+          <div class="form-group">
+            <input type="text" class="form-control form-control-sm" name="" id="" aria-describedby="helpId" placeholder="100*(10)">
+          </div>
+          <div class="form-group">
+            <select class="form-control form-control-sm" name="" id="">
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+            </select>
+            <div class="plusicon"><i class="fas fa-plus"></i></div>
+          </div>
+        </div>
       </div>
-    </div> -->
+    </div>
 
 </div>
 
@@ -164,7 +177,6 @@
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <!-- <button type="button"  class="btn btn-danger confirmadd  px-4">Confirm</button> -->
       </div>
       </div>
   </div>

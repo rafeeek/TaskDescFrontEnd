@@ -4,8 +4,12 @@
     align-items: center;
 }
 #list-tab{
-    max-height: 300px !important;
+    max-height: 246px !important;
     overflow-y: scroll;
+}
+
+.firstcol{
+    height: 350px !important;
 }
 .containicon{
     display: flex;
@@ -27,6 +31,31 @@
     color: blue;
     text-decoration: underline;
 }
+.hide{
+    display: none;
+}
+.slider{
+    height: 350px !important;
+}
+.slider .closeicon{
+    font-size: 20px;
+    cursor: pointer;
+}
+.controler{
+    display: flex;
+    justify-content: space-evenly
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
