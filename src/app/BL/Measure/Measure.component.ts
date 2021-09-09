@@ -11,7 +11,6 @@ declare var $: any;
   styleUrls: ['./Measure.component.scss']
 })
 export class MeasureComponent implements OnInit {
- 
   caption?:string;
   DistinctList? : [string];
   MeasuresArray : any;
@@ -29,13 +28,16 @@ export class MeasureComponent implements OnInit {
   }
 
 
-
+  //#region DistincitList
   getDistincitList() {
     this.measureService.getDistinctList().subscribe(data => {
       this.DistinctList = data;
     });
   }
+  //#endregion
 
+
+  //#region ReadMeasures
   getMeasures(text:any){
     this.caption = text.path[0].attributes[1].value;
     this.measuresSubscribe(this.caption);
@@ -46,59 +48,38 @@ export class MeasureComponent implements OnInit {
       this.MeasuresArray = data;
     });
   }
+  //#endregion
 
-  addNewCategory(){
-    if (localStorage.getItem("Category") == null) {
-      localStorage.setItem("Category" , JSON.stringify(this.categoryName));
-      $('#exampleModal').modal('hide');
-      this.MeasuresArray = [];
-      $(".apendCategory").html("");
-      $(".apendCategory").append(`<a class="categoryBtn btn btn-dark w-100 mb-2">${this.categoryName}</a>`);
-      $(".categoryBtn").mouseenter(()=>$(".categoryBtn").html("Cancel"))
-      $(".categoryBtn").click(()=>this.cancelMeasures())
-      $(".categoryBtn").mouseout(()=>$(".categoryBtn").html(`${this.categoryName}`))
-    }else{
-      alert("You can add one category per once")
+  //#region AddMeasures
+    addNewMeasurements(){
+      if (localStorage.getItem("Category") !=  null) {
+       var Cat : any = localStorage.getItem("Category")
+       Cat = JSON.parse(Cat);
+       var data = new MeasuresModel(this.uomeCateg , this.uomeId ,this.uomeDesc , Cat ,this.uomeSysFlg , this.umcsId , this.uomkey);
+       this.AddnewMeasuresArray.push(data)
+       this.MeasuresArray.push(data)
+       $('#exampleModal').modal('hide');
+      }else{
+        alert("Please Add Category First");
+      }
     }
-  };
+  
+    sendMeasuresToDatabase(){
+      for (const one of this.AddnewMeasuresArray) {
+        this.measureService.addNewMeasures(one).subscribe(data=>{
+          if (data) this.getDistincitList();
+          this.showSuccess(data.Massage)
+        })  
+      }
+      this.cancelMeasures();
+      
+    };
+  //#endregion
 
-  addNewMeasurements(){
-     if (localStorage.getItem("Category") !=  null) {
-      var Cat : any = localStorage.getItem("Category")
-      Cat = JSON.parse(Cat);
-      var data = new MeasuresModel(this.uomeCateg , this.uomeId ,this.uomeDesc , Cat ,this.uomeSysFlg , this.umcsId , this.uomkey);
-      this.AddnewMeasuresArray.push(data)
-      this.MeasuresArray.push(data)
-      $('#exampleModal').modal('hide');
-     }else{
-       alert("Please Add Category First");
-     }
-
-  }
-   
-  openModel(data:any){
-
-    var target = data.path[0].attributes[1].value;
-    this.targetmodel = target;
-    $('#exampleModal').modal('show');
-  };
-
-  sendMeasuresToDatabase(){
-    for (const one of this.AddnewMeasuresArray) {
-      this.measureService.addNewMeasures(one).subscribe(data=>{
-        if (data) this.getDistincitList();
-        this.showSuccess(data.Massage)
-      })  
-    }
-    this.cancelMeasures();
-    
-  };
-
-  cancelMeasures() {
-    $(".apendCategory").html("");
-    this.MeasuresArray = [];
-    this.AddnewMeasuresArray = [];
-    localStorage.removeItem("Category");
+  //#region UpdateMeasure
+  callForDblClick(event:any){
+    this.isSingleClick = false;
+    this.UpdateOneMeasure(event)
   }
 
   UpdateOneMeasure(event:any){
@@ -121,41 +102,70 @@ export class MeasureComponent implements OnInit {
       $('#exampleModal').modal('hide');
     })
   }
+  //#endregion 
 
+  //#region Category
+  addNewCategory(){
+    if (localStorage.getItem("Category") == null) {
+      localStorage.setItem("Category" , JSON.stringify(this.categoryName));
+      $('#exampleModal').modal('hide');
+      this.MeasuresArray = [];
+      $(".apendCategory").html("");
+      $(".apendCategory").append(`<a class="categoryBtn btn btn-dark w-100 mb-2">${this.categoryName}</a>`);
+      $(".categoryBtn").mouseenter(()=>$(".categoryBtn").html("Cancel"))
+      $(".categoryBtn").click(()=>this.cancelMeasures())
+      $(".categoryBtn").mouseout(()=>$(".categoryBtn").html(`${this.categoryName}`))
+    }else{
+      alert("You can add one category per once")
+    }
+  };
+  //#endregion
 
+  //#region Slider
   clocseslider(){
     $(".slider").addClass("hide")
     $(".tablecol").removeClass("col-md-7")
     $(".tablecol").addClass("col-md-10")
   }
 
-  CallForClick(obj:object){
+  callForClick(obj:any){
     this.isSingleClick = true;
       setTimeout(()=>{
         if(this.isSingleClick){
           $(".tablecol").removeClass("col-md-10")
           $(".tablecol").addClass("col-md-7")
           $(".slider").removeClass("hide")
+          $(".unitid").html(`${obj.UomeId}`)
           $(".titletext").html(`${this.caption}`)
-
         }
       },250)
- }
-  CallForDblClick(event:any){
-      this.isSingleClick = false;
-      this.UpdateOneMeasure(event)
   }
+  //#endregion
 
-
-  //#region Show Tasor
+  //#region ShowToastr
   showSuccess(data:string) {
     this.toastr.success('', data ,{timeOut: 2000, progressBar:true , });
   };
   //#endregion  
 
-  
-  ngOnInit() {
+  //#region Other
+  openModel(data:any){
 
+    var target = data.path[0].attributes[1].value;
+    this.targetmodel = target;
+    $('#exampleModal').modal('show');
+  };
+
+  cancelMeasures() {
+    $(".apendCategory").html("");
+    this.MeasuresArray = [];
+    this.AddnewMeasuresArray = [];
+    localStorage.removeItem("Category");
+  }
+  //#endregion 
+
+
+  ngOnInit() {
   }
 
 }

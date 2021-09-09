@@ -60,7 +60,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let one of MeasuresArray" (click)="CallForClick(one)" (dblclick)="CallForDblClick(one)">
+                                    <tr *ngFor="let one of MeasuresArray" (click)="callForClick(one)" (dblclick)="callForDblClick(one)">
                                       <td>{{one.UomeId}}</td>
                                       <td>{{one.UomeDesc}}</td>
                                       <td>{{one.UmcsId}}</td>
@@ -82,9 +82,9 @@
         <div (click)="clocseslider()" class="w-100 text-right mb-3"><i class="fas fa-times-circle closeicon"></i></div>
         <h5 style="background-color: #C8CBCF;" class=" py-2 mb-4 rounded text-center titletext">Rafeek</h5>
         <div class="controler row">
-          <div class="col-md-1">
-            <div class="containef">
-              <h4>c</h4>
+          <div class="col-md-2">
+            <div class="containef ">
+              <p Class="unitid mb-0"></p>
             </div>
           </div>
           <div class="col-md-5">
@@ -92,7 +92,7 @@
               <input type="text" class="form-control form-control-sm" name="" id="" aria-describedby="helpId" placeholder="100*(10)">
             </div>
           </div>
-          <div  class="col-md-6 therdtit">
+          <div  class="col-md-5 therdtit">
             <div class="form-group">
               <select class="form-control form-control-sm" name="" id="">
                 <option>A</option>
